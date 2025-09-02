@@ -8,6 +8,7 @@ import type { Application } from './declarations'
 import { logError } from './hooks/log-error'
 import { services } from './services/index'
 import { channels } from './channels'
+import mongoose from './models/mongoose'
 
 const app: Application = koa(feathers())
 
@@ -20,6 +21,9 @@ app.use(serveStatic(app.get('public')))
 app.use(errorHandler())
 app.use(parseAuthentication())
 app.use(bodyParser())
+
+// Set up mongoose
+mongoose(app)
 
 // Configure services and transports
 app.configure(rest())
