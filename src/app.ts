@@ -8,6 +8,8 @@ import type { Application } from './declarations'
 import { logError } from './hooks/log-error'
 import { services } from './services/index'
 import { channels } from './channels'
+import mongoose from './models/mongoose'
+import { configureCurrencyHelper } from './helpers/currency'
 
 const app: Application = koa(feathers())
 
@@ -20,6 +22,10 @@ app.use(serveStatic(app.get('public')))
 app.use(errorHandler())
 app.use(parseAuthentication())
 app.use(bodyParser())
+
+// Set up 3rd party middleware
+mongoose(app)
+configureCurrencyHelper(app)
 
 // Configure services and transports
 app.configure(rest())

@@ -50,6 +50,7 @@
     "@feathersjs/transport-commons": "^5.0.34",
     "joi": "^18.0.1",
     "mongoose": "^8.18.0",
+    "open-exchange-rates": "^0.3.0",
     "rabbit-queue": "^5.6.0",
     "winston": "^3.17.0"
   },

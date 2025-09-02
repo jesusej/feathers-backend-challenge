@@ -7,5 +7,6 @@
   "authentication": {
     "secret": "FEATHERS_SECRET"
   },
-  "mongodb": "MONGODB_URI"
+  "mongodb": "MONGODB_URI",
+  "currency_app_id": "CURRENCY_APP_ID"
 }
