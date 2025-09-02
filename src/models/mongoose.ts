@@ -11,7 +11,5 @@ export default function (app: Application) {
       logger.error('MongoDB connection error:', err);
     });
 
-  app.set('mongooseClient', mongoose);
-
   return mongoose;
 }
