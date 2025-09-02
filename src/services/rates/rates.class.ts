@@ -2,6 +2,7 @@
 import type { Params, ServiceInterface } from '@feathersjs/feathers'
 
 import type { Application } from '../../declarations'
+import { getLatestRates } from '../../helpers/currency'
 
 type Rates = any
 type RatesData = any
@@ -23,7 +24,12 @@ export class RatesService<ServiceParams extends RatesParams = RatesParams>
   constructor(public options: RatesServiceOptions) {}
 
   async find(_params?: ServiceParams): Promise<Rates[]> {
-    return []
+    const rates = await getLatestRates();
+    console.log('RATES', rates)
+    return Object.entries(rates).map(([currency, rate]) => ({
+      currency,
+      rate
+    }));
   }
 
   async create(data: RatesData, params?: ServiceParams): Promise<Rates>
