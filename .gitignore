@@ -118,4 +118,6 @@ dist
 .pnp.*
 .sqlite
 
+# Feathers
 lib/
+config/local.json
