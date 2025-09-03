@@ -1,32 +1,31 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
 
 import type { Application } from '../../declarations'
-import { ConvertService, getOptions } from './convert.class'
-import { validateSchema } from '../../hooks/validate-schema'
-import { convertSchema } from './convert.schema'
+import { addPdfHeaders } from '../../hooks/add-pdf-headers'
+import { ReportService, getOptions } from './report.class'
 
-export const convertPath = 'convert'
-export const convertMethods: Array<keyof ConvertService> = ['create']
+export const reportPath = 'report'
+export const reportMethods: Array<keyof ReportService> = ['find']
 
-export * from './convert.class'
+export * from './report.class'
 
 // A configure function that registers the service and its hooks via `app.configure`
-export const convert = (app: Application) => {
+export const report = (app: Application) => {
   // Register our service on the Feathers application
-  app.use(convertPath, new ConvertService(getOptions(app)), {
+  app.use(reportPath, new ReportService(getOptions(app)), {
     // A list of all methods this service exposes externally
-    methods: convertMethods,
+    methods: reportMethods,
     // You can add additional custom events to be sent to clients here
     events: []
   })
   // Initialize hooks
-  app.service(convertPath).hooks({
+  app.service(reportPath).hooks({
     around: {
       all: []
     },
     before: {
       all: [],
-      create: [validateSchema(convertSchema)]
+      find: [addPdfHeaders],
     },
     after: {
       all: []
@@ -40,6 +39,6 @@ export const convert = (app: Application) => {
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    [convertPath]: ConvertService
+    [reportPath]: ReportService
   }
 }

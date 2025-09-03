@@ -48,10 +48,13 @@
     "@feathersjs/schema": "^5.0.34",
     "@feathersjs/socketio": "^5.0.34",
     "@feathersjs/transport-commons": "^5.0.34",
+    "@types/pdfmake": "^0.2.11",
     "joi": "^18.0.1",
     "mongoose": "^8.18.0",
     "open-exchange-rates": "^0.3.0",
+    "pdfmake": "^0.2.20",
     "rabbit-queue": "^5.6.0",
+    "roboto-font": "^0.1.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
