@@ -21,27 +21,34 @@ export class ConvertService implements ServiceInterface<ConvertResult, ConvertDa
 {
   constructor(public options: ConvertOptions) {}
 
+  /**
+   * Converts an amount from one currency to another using stored exchange rates
+   * @param data Object containing source currency (from), target currency (to) and amount to convert
+   * @returns Object with the converted amount in the target currency
+   * @throws BadRequest if one or both currencies are not found in the database
+   */
   async create(data: ConvertData): Promise<ConvertResult> {
     const { from, to, amount } = data
 
-    // Get both rates from the database
+    // Fetch both currency rates in parallel for better performance
     const [fromCurrency, toCurrency] = await Promise.all([
       Currency.findById(from),
       Currency.findById(to)
     ])
 
-    // Check if both currencies exist
+    // Validate that both currencies exist in our database
     if (!fromCurrency || !toCurrency) {
       throw new BadRequest('One or both currencies not found')
     }
 
-    // Calculate the conversion
+    // Convert amount to USD (base currency) first, then to target currency
+    // Formula: (amount / source_rate) * target_rate
     const result = (amount / fromCurrency.rate) * toCurrency.rate
 
-    // Round to 2 decimal places
+    // Round to 2 decimal places to avoid floating point precision issues
     const roundedResult = Math.round(result * 100) / 100
 
-    // Store the conversion
+    // Store conversion history in database for tracking
     await Conversion.create({
       from,
       to,
