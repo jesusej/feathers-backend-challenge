@@ -3,6 +3,7 @@ import { Application } from '../../declarations'
 import { Currency } from '../../models/currency.model'
 import { Conversion } from '../../models/conversion.model'
 import { BadRequest } from '@feathersjs/errors'
+import { addToQueue } from '../../helpers/rabbit-queue'
 
 interface ConversionData {
   from: string
@@ -48,14 +49,19 @@ export class ConvertService implements ServiceInterface<ConvertResult, ConvertDa
     // Round to 2 decimal places to avoid floating point precision issues
     const roundedResult = Math.round(result * 100) / 100
 
-    // Store conversion history in database for tracking
-    await Conversion.create({
+    const conversionData = {
       from,
       to,
       amount,
       result: roundedResult,
       timestamp: new Date()
-    })
+    }
+
+    // Store conversion history in database for tracking
+    await Conversion.create(conversionData)
+
+    // Add conversion data to RabbitMQ queue for further processing
+    addToQueue(conversionData)
 
     return { result: roundedResult }
   }
