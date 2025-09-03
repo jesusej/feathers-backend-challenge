@@ -79,7 +79,7 @@ export class RatesService<ServiceParams extends RatesParams = RatesParams>
       const updatedCurrency = await Currency.findOneAndUpdate(
         { _id: data._id },
         { rate: data.rate },
-        { new: true }
+        { new: true, fields: { createdAt: 0, updatedAt: 0 } }
       );
 
       if (!updatedCurrency) {
