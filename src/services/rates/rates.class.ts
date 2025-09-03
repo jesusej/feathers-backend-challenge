@@ -3,6 +3,7 @@ import type { Application } from '../../declarations';
 import Currency, { ICurrency } from '../../models/currency.model';
 import { getLatestRates } from '../../helpers/currency';
 import { logger } from '../../logger';
+import { BadRequest, NotFound } from '@feathersjs/errors';
 
 type Rates = ICurrency;
 type RatesData = Omit<ICurrency, 'createdAt' | 'updatedAt'>;
@@ -67,13 +68,29 @@ export class RatesService<ServiceParams extends RatesParams = RatesParams>
     return Currency.find({}, { createdAt: 0 }).exec();
   }
 
-  async create(data: RatesData, params?: ServiceParams): Promise<Rates>
-  async create(data: RatesData[], params?: ServiceParams): Promise<Rates[]>
-  async create(data: RatesData | RatesData[], params?: ServiceParams): Promise<Rates | Rates[]> {
-    if (Array.isArray(data)) {
-      return Promise.all(data.map(current => this.create(current, params)))
+  async create(data: RatesData): Promise<Rates> {
+    const existingCurrency = await Currency.findById(data._id);
+    if (!existingCurrency) {
+      logger.error(`Currency ${data._id} not found`);
+      throw new NotFound(`Currency ${data._id} does not exist in the database`);
     }
 
-    return data as Rates
+    try {
+      const updatedCurrency = await Currency.findOneAndUpdate(
+        { _id: data._id },
+        { rate: data.rate },
+        { new: true, fields: { createdAt: 0, updatedAt: 0 } }
+      );
+
+      if (!updatedCurrency) {
+        throw new Error('Failed to update currency rate');
+      }
+
+      logger.info(`Successfully updated rate for currency ${data._id}`);
+      return updatedCurrency;
+    } catch (error) {
+      logger.error('Error updating currency rate:', error);
+      throw new BadRequest('Failed to update currency rate');
+    }
   }
 }

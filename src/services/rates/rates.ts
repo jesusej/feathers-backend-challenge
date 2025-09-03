@@ -2,6 +2,8 @@
 
 import type { Application } from '../../declarations'
 import { RatesService } from './rates.class'
+import { validateSchema } from '../../hooks/validate-schema'
+import { currencySchema } from './rates.schema'
 
 export const ratesPath = 'rates'
 export const ratesMethods: Array<keyof RatesService> = ['find', 'create']
@@ -9,6 +11,7 @@ export const ratesMethods: Array<keyof RatesService> = ['find', 'create']
 export * from './rates.class'
 
 // A configure function that registers the service and its hooks via `app.configure`
+// The service includes schema validation for create operations using the validateSchema hook
 export const rates = (app: Application) => {
   // Register our service on the Feathers application
   app.use(ratesPath, new RatesService({ app }), {
@@ -25,7 +28,9 @@ export const rates = (app: Application) => {
     before: {
       all: [],
       find: [],
-      create: [],
+      create: [
+        validateSchema<RatesService>(currencySchema)
+      ],
     },
     after: {
       all: []
