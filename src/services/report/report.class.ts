@@ -20,7 +20,7 @@ export class ReportService
     // Get today conversions
     const conversions = await Conversion.find({ timestamp: {$gt: new Date().setHours(0, 0, 0, 0), $lt: new Date().setHours(23, 59, 59, 999)} }).lean().exec()
 
-    const report = generateConversionReport(conversions, { title: 'Report', showTimestamp: true, groupByCurrency: false })
+    const report = generateConversionReport(conversions)
 
     // Set response headers
     if (params) {
