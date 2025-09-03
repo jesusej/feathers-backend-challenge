@@ -5,7 +5,7 @@ import { ConvertService, getOptions } from './convert.class'
 import { validateSchema } from '../../hooks/validate-schema'
 import { convertSchema } from './convert.schema'
 
-export const convertPath = '/convert'
+export const convertPath = 'convert'
 export const convertMethods: Array<keyof ConvertService> = ['create']
 
 export * from './convert.class'
