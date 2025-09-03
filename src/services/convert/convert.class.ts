@@ -10,18 +10,18 @@ interface ConversionData {
   amount: number
 }
 
-export type Convert = ConversionData & { result: number, timestamp: Date }
 export type ConvertData = ConversionData
+export type ConvertResult = { result: number }
 
 export interface ConvertOptions {
   app: Application
 }
 
-export class ConvertService implements Pick<ServiceInterface<Convert, ConvertData>, 'create'>
+export class ConvertService implements ServiceInterface<ConvertResult, ConvertData>
 {
   constructor(public options: ConvertOptions) {}
 
-  async create(data: ConvertData): Promise<Convert> {
+  async create(data: ConvertData): Promise<ConvertResult> {
     const { from, to, amount } = data
 
     // Get both rates from the database
@@ -42,7 +42,7 @@ export class ConvertService implements Pick<ServiceInterface<Convert, ConvertDat
     const roundedResult = Math.round(result * 100) / 100
 
     // Store the conversion
-    const conversion = await Conversion.create({
+    await Conversion.create({
       from,
       to,
       amount,
@@ -50,7 +50,7 @@ export class ConvertService implements Pick<ServiceInterface<Convert, ConvertDat
       timestamp: new Date()
     })
 
-    return conversion
+    return { result: roundedResult }
   }
 }
 
