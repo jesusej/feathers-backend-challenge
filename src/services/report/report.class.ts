@@ -22,14 +22,6 @@ export class ReportService
 
     const report = generateConversionReport(conversions)
 
-    // Set response headers
-    if (params) {
-      params.headers = {
-        'Content-Type': 'application/pdf',
-        'Content-Disposition': 'attachment; filename="rates-report.pdf"'
-      };
-    }
-
     return report
   }
 }

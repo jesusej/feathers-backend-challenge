@@ -1,6 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
 
 import type { Application } from '../../declarations'
+import { addPdfHeaders } from '../../hooks/add-pdf-headers'
 import { ReportService, getOptions } from './report.class'
 
 export const reportPath = 'report'
@@ -24,7 +25,7 @@ export const report = (app: Application) => {
     },
     before: {
       all: [],
-      find: [],
+      find: [addPdfHeaders],
     },
     after: {
       all: []
