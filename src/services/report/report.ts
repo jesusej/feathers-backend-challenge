@@ -4,7 +4,7 @@ import type { Application } from '../../declarations'
 import { ReportService, getOptions } from './report.class'
 
 export const reportPath = 'report'
-export const reportMethods: Array<keyof ReportService> = ['find', 'get', 'create', 'patch', 'remove']
+export const reportMethods: Array<keyof ReportService> = ['find']
 
 export * from './report.class'
 
@@ -25,10 +25,6 @@ export const report = (app: Application) => {
     before: {
       all: [],
       find: [],
-      get: [],
-      create: [],
-      patch: [],
-      remove: []
     },
     after: {
       all: []
