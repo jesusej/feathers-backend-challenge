@@ -13,10 +13,10 @@ import { join } from 'path';
  */
 const fonts = {
   Roboto: {
-    normal: join(__dirname, '../../node_modules/roboto-font/fonts/Roboto/Roboto-Regular.ttf'),
-    bold: join(__dirname, '../../node_modules/roboto-font/fonts/Roboto/Roboto-Medium.ttf'),
-    italics: join(__dirname, '../../node_modules/roboto-font/fonts/Roboto/Roboto-Italic.ttf'),
-    bolditalics: join(__dirname, '../../node_modules/roboto-font/fonts/Roboto/Roboto-MediumItalic.ttf')
+    normal: join(__dirname, '../../node_modules/roboto-font/fonts/Roboto/roboto-regular-webfont.ttf'),
+    bold: join(__dirname, '../../node_modules/roboto-font/fonts/Roboto/roboto-medium-webfont.ttf'),
+    italics: join(__dirname, '../../node_modules/roboto-font/fonts/Roboto/roboto-italic-webfont.ttf'),
+    bolditalics: join(__dirname, '../../node_modules/roboto-font/fonts/Roboto/roboto-mediumitalic-webfont.ttf')
   }
 };
 
@@ -174,7 +174,11 @@ export function generateConversionReport(
   try {
     const printer = new PdfMake(fonts);
     const docDefinition = createDocumentDefinition(conversions, options);
-    return Readable.from(printer.createPdfKitDocument(docDefinition))
+    
+    const pdfDoc = printer.createPdfKitDocument(docDefinition)
+    pdfDoc.end()
+
+    return Readable.from(pdfDoc)
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     throw new Error(`Failed to generate PDF report: ${errorMessage}`);
