@@ -1,0 +1,5 @@
+{
+  "mongodb": "mongodb+srv://username:password@url.com",
+  "currency_app_id": "currency_app_id",
+  "rabbitmq_url": "amqps://username:password@url.com"
+}
