@@ -61,6 +61,7 @@
     "@feathersjs/adapter-commons": "^5.0.34",
     "@feathersjs/cli": "5.0.34",
     "@feathersjs/rest-client": "^5.0.34",
+    "@types/amqplib": "^0.10.7",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.15.3",
     "axios": "^1.9.0",
