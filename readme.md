@@ -1,6 +1,6 @@
 # Feathers Backend Challenge
 
-> Currency Conversion API challenge made with FeathersJS stack
+> Currency Conversion API challenge made with FeathersJS stack. You can see the original submission [here](https://github.com/jesusej/feathers-backend-challenge/tree/archive/original-submission).
 
 ## Table of Contents
 
