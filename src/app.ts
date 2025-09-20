@@ -9,7 +9,6 @@ import { logError } from './hooks/log-error'
 import { services } from './services/index'
 import { channels } from './channels'
 import mongoose from './models/mongoose'
-import { configureCurrencyHelper } from './helpers/currency'
 import { setupQueue } from './helpers/rabbit-queue'
 
 const app: Application = koa(feathers())
@@ -26,7 +25,6 @@ app.use(bodyParser())
 
 // Set up 3rd party middleware
 mongoose(app)
-configureCurrencyHelper(app)
 setupQueue(app)
 
 // Configure services and transports

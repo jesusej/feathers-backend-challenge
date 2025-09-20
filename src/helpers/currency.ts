@@ -1,38 +1,21 @@
-import oxr, { LatestRates } from 'open-exchange-rates';
-import { Application } from '@feathersjs/feathers';
-import { logger } from '../logger';
-
-export interface CurrencyHelperOptions {
-  appId: string;
-}
+import { Application } from '@feathersjs/feathers'
 
 /**
- * Fetches the latest exchange rates from the OpenExchangeRates API
+ * Fetches the latest exchange rates from the Exchange Rates API
  * @returns A record of currency codes and their rates
  */
-export const getLatestRates = async (): Promise<Record<string, number>> => {
-  try {
-    const latest = await new Promise<LatestRates>((resolve, reject) => {
-      oxr.latest((error) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(oxr);
-        }
-      });
-    });
-    return latest.rates;
-  } catch (error) {
-    console.error('Error fetching exchange rates:', error);
-    throw error;
-  }
-};
+export const getLatestRates = async (app: Application): Promise<Record<string, number>> => {
+  const appId = app.get('currency_app_id') as string
+  return fetch(`https://openexchangerates.org/api/latest.json?app_id=${appId}&show_alternative=true`, {
+    method: 'GET'
+  })
+    .then(async response => {
+      const data = await response.json()
 
-/**
- * Configures the OpenExchangeRates client with the application's API key
- * @param app The Feathers application instance
- */
-export const configureCurrencyHelper = (app: Application) => {
-  const appId = app.get('currency_app_id') as string;
-  oxr.set({ app_id: appId });
-};
+      return data.rates as Record<string, number>
+    })
+    .catch(error => {
+      console.error(error)
+      throw error
+    })
+}
