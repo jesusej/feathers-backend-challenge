@@ -47,6 +47,9 @@ importers:
       mongoose:
         specifier: ^8.18.0
         version: 8.18.0
+      node-cron:
+        specifier: ^4.2.1
+        version: 4.2.1
       pdfmake:
         specifier: ^0.2.20
         version: 0.2.20
@@ -1432,6 +1435,10 @@ packages:
 
   nice-try@1.0.5:
     resolution: {integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==}
+
+  node-cron@4.2.1:
+    resolution: {integrity: sha512-lgimEHPE/QDgFlywTd8yTR61ptugX3Qer29efeyWw2rv259HtGBNn1vZVmp8lB9uo9wC0t/AT4iGqXxia+CJFg==}
+    engines: {node: '>=6.0.0'}
 
   nodemon@3.1.10:
     resolution: {integrity: sha512-WDjw3pJ0/0jMFmyNDp3gvY2YizjLmmOUQo6DEBY+JgdvW/yQ9mEeSw6H5ythl5Ny2ytb7f9C2nIbjSxMNzbJXw==}
@@ -3407,6 +3414,8 @@ snapshots:
   negotiator@0.6.3: {}
 
   nice-try@1.0.5: {}
+
+  node-cron@4.2.1: {}
 
   nodemon@3.1.10:
     dependencies:
