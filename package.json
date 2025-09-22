@@ -39,6 +39,7 @@
     "bundle:client": "npm run compile && npm pack --pack-destination ./public"
   },
   "dependencies": {
+    "@coingecko/coingecko-typescript": "^1.14.0",
     "@feathersjs/authentication": "^5.0.34",
     "@feathersjs/authentication-client": "^5.0.34",
     "@feathersjs/configuration": "^5.0.34",
@@ -51,7 +52,6 @@
     "@types/pdfmake": "^0.2.11",
     "joi": "^18.0.1",
     "mongoose": "^8.18.0",
-    "open-exchange-rates": "^0.3.0",
     "pdfmake": "^0.2.20",
     "rabbit-queue": "^5.6.0",
     "roboto-font": "^0.1.0",

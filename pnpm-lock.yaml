@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@coingecko/coingecko-typescript':
+        specifier: ^1.14.0
+        version: 1.14.0
       '@feathersjs/authentication':
         specifier: ^5.0.34
         version: 5.0.34(typescript@5.9.2)
@@ -44,9 +47,6 @@ importers:
       mongoose:
         specifier: ^8.18.0
         version: 8.18.0
-      open-exchange-rates:
-        specifier: ^0.3.0
-        version: 0.3.0
       pdfmake:
         specifier: ^0.2.20
         version: 0.2.20
@@ -108,6 +108,9 @@ packages:
   '@babel/runtime@7.28.3':
     resolution: {integrity: sha512-9uIQ10o0WGdpP6GDhXcdOJPJuDgFtIDtN/9+ArJQ2NAfAmiuhTQdzkaTGR33v43GYS2UrSA0eX2pPPHoFVvpxA==}
     engines: {node: '>=6.9.0'}
+
+  '@coingecko/coingecko-typescript@1.14.0':
+    resolution: {integrity: sha512-xZfZz7n7j2bhylZJsmkgfIsAIeZ5u++I4Qui11L7AIYjDlX73fofw13Y81sAXlM4dDU8uizntS69tFzp2MFVBg==}
 
   '@colors/colors@1.6.0':
     resolution: {integrity: sha512-Ir+AOibqzrIsL6ajt3Rz3LskB7OiMVHqltZmspbW/TJuTVuyOMirVqAkjfY6JISiLHgyNqicAC8AyHHGzNd/dA==}
@@ -1097,10 +1100,6 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  http-agent@0.1.2:
-    resolution: {integrity: sha512-X2088Vy9djzfgK7Ge1I5D3xgnc4c0SNxlwU8e1XDCiOp/iDPixESMA7PlADE0+S4WWzv/g6JIvFwugq1BItBOw==}
-    engines: {node: '>= 0.2.0'}
-
   http-assert@1.5.0:
     resolution: {integrity: sha512-uPpH7OKX4H25hBmU6G1jWNaqJGpTXxey+YOUizJUAgu0AjLUeC8D73hTrhvDS5D+GJN1DN1+hhc/eF/wpxtp0w==}
     engines: {node: '>= 0.8'}
@@ -1469,9 +1468,6 @@ packages:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
 
-  open-exchange-rates@0.3.0:
-    resolution: {integrity: sha512-dxRGJ1LXbkNM1RZxcbO6XI9i+O2xduVbpb34RGspthuRC/M098gNxmReFTVJ30/3wxMk6Cp9S65eQlnP3Ye3pg==}
-
   ora@5.4.1:
     resolution: {integrity: sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==}
     engines: {node: '>=10'}
@@ -1596,11 +1592,6 @@ packages:
   rechoir@0.6.2:
     resolution: {integrity: sha512-HFM8rkZ+i3zrV+4LQjwQ0W+ez98pApMGM3HUrN04j3CqzPOzl9nmP15Y8YXNm8QHGv/eacOVEjqhmWpkRV0NAw==}
     engines: {node: '>= 0.10'}
-
-  request@1.9.9:
-    resolution: {integrity: sha512-YVWSKYdBolxLllo8GVK24jnf0ck+P4XeBEkFPz5jdVZzZ2L8jXzDJPaZ+DrIrc89S1c4fDBgu3hsluxe4X9nqQ==}
-    engines: {'0': node >= 0.3.6}
-    deprecated: request has been deprecated, see https://github.com/request/request/issues/3142
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -2019,6 +2010,8 @@ packages:
 snapshots:
 
   '@babel/runtime@7.28.3': {}
+
+  '@coingecko/coingecko-typescript@1.14.0': {}
 
   '@colors/colors@1.6.0': {}
 
@@ -3053,10 +3046,6 @@ snapshots:
 
   he@1.2.0: {}
 
-  http-agent@0.1.2:
-    dependencies:
-      request: 1.9.9
-
   http-assert@1.5.0:
     dependencies:
       deep-equal: 1.0.1
@@ -3458,10 +3447,6 @@ snapshots:
     dependencies:
       mimic-fn: 2.1.0
 
-  open-exchange-rates@0.3.0:
-    dependencies:
-      http-agent: 0.1.2
-
   ora@5.4.1:
     dependencies:
       bl: 4.1.0
@@ -3575,8 +3560,6 @@ snapshots:
   rechoir@0.6.2:
     dependencies:
       resolve: 1.22.10
-
-  request@1.9.9: {}
 
   require-directory@2.1.1: {}
 
