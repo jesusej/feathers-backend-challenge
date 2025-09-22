@@ -4,6 +4,7 @@ import Currency, { ICurrency } from '../../models/currency.model'
 import { getLatestRates } from '../../helpers/currency'
 import { logger } from '../../logger'
 import { BadRequest, NotFound } from '@feathersjs/errors'
+import * as cron from 'node-cron'
 
 type Rates = ICurrency
 type RatesData = Omit<ICurrency, 'createdAt' | 'updatedAt'>
@@ -14,6 +15,8 @@ export type { Rates, RatesData, RatesPatch, RatesQuery }
 
 export interface RatesServiceOptions {
   app: Application
+  // Add optional cron schedule configuration
+  rateSyncCron?: string // Cron expression, defaults to '0 * * * *' (every hour)
 }
 
 export interface RatesParams extends Params<RatesQuery> {}
@@ -21,10 +24,52 @@ export interface RatesParams extends Params<RatesQuery> {}
 export class RatesService<ServiceParams extends RatesParams = RatesParams>
   implements ServiceInterface<Rates, RatesData, ServiceParams, RatesPatch>
 {
+  private rateSyncJob: cron.ScheduledTask | null = null
+
   constructor(public options: RatesServiceOptions) {
     this.syncRatesWithDB().catch(error => {
       logger.error('Failed to sync initial rates with database:', error)
     })
+    this.setupRateSyncCron()
+  }
+
+  /**
+   * Set up the cron job for syncing rates
+   * @param cronExpression Optional cron expression (default: '0 * * * *' - every hour)
+   */
+  private setupRateSyncCron(cronExpression: string = this.options.rateSyncCron || '0 * * * *'): void {
+    // Stop existing job if it exists
+    if (this.rateSyncJob) {
+      this.rateSyncJob.stop()
+    }
+
+    logger.info(`Setting up rate sync cron job with schedule: ${cronExpression}`)
+
+    this.rateSyncJob = cron.schedule(
+      cronExpression,
+      async () => {
+        try {
+          logger.info('Starting scheduled rate sync...')
+          await this.syncRatesWithDB()
+          logger.info('Scheduled rate sync completed successfully')
+        } catch (error) {
+          logger.error('Scheduled rate sync failed:', error)
+        }
+      },
+      {
+        timezone: 'UTC'
+      }
+    )
+  }
+
+  /**
+   * Clean up the cron job when the service is stopped
+   */
+  async teardown(): Promise<void> {
+    if (this.rateSyncJob) {
+      this.rateSyncJob.stop()
+      this.rateSyncJob = null
+    }
   }
 
   /**
