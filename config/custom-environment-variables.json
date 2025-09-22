@@ -9,5 +9,6 @@
   },
   "mongodb": "MONGODB_URI",
   "currency_app_id": "CURRENCY_APP_ID",
+  "crypto_app_id": "CRYPTO_APP_ID",
   "rabbitmq_url": "RABBITMQ_URL"
 }
